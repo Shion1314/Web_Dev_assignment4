@@ -16,7 +16,7 @@ export default function App() {
 
   const addRow = () => {
     let NumCol;
-    if (grid[0]) { //assume all column must have the same amount of row so no need to iterate
+    if (grid[0]) { 
       NumCol = grid[0].props.NumCol;
     } else {
       NumCol = 1;
