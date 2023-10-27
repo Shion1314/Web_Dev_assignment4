@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import './styles.css';
 
-function Row({ NumCol }) {
+function Row({ NumCol}) {
   const square = [];
   for (let index = 0; index < NumCol; index++) {
     square.push(<td key={index} className='square'></td>)
   }
+
   return (
-   <tr>{square}</tr>
+   <tr>{square}
+  
+   
+   </tr>
   );
 }
 
@@ -31,6 +35,9 @@ export default function App() {
       setGrid(grid.slice(0, -1));
     }
   };
+
+
+
 
   return (
     <div>
