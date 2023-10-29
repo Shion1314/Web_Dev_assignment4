@@ -1,5 +1,7 @@
+
 import React, { useState } from 'react';
 import './styles.css';
+
 
 function Row({ NumCol }) {
   const square = [];
@@ -9,7 +11,6 @@ function Row({ NumCol }) {
   return (
    <tr>{square}</tr>
   );
-}
 
 export default function App() {
   const [grid, setGrid] = useState([]);
@@ -31,6 +32,40 @@ export default function App() {
       setGrid(grid.slice(0, -1));
     }
   };
+  const addColumn = () => {
+    // If there is no first row, add one
+    if (!grid[0]) {
+      addRow();
+    }
+    else{
+  
+    // Add a column to each row in the grid
+    const newGrid = grid.map((row) => {
+      const newNumCol = row.props.NumCol + 1;
+      return <Row NumCol={newNumCol} />;
+    });
+    setGrid(newGrid);
+  }
+  
+  
+  };
+  const removeColumn = () => {
+    if (grid.length === 0) {
+      return; 
+    }
+    if (grid[0].props.NumCol === 1) {
+      setGrid([]);
+    } else {
+      const newGrid = grid.map((row) => {
+        const newNumCol = Math.max(1, row.props.NumCol - 1);
+        return <Row NumCol={newNumCol} />;
+      });
+    
+      setGrid(newGrid);
+    }
+
+   
+  };
 
   return (
     <div>
@@ -38,6 +73,8 @@ export default function App() {
       <div className="button-group">
         <button onClick={addRow}>Add Row</button>
         <button onClick={removeRow}>Remove Row</button>
+        <button onClick={addColumn}>Add Column</button>
+        <button onClick={removeColumn}>Remove Column</button>
       </div>
       <table id="grid-sheet">
         <tbody>{grid}</tbody>
