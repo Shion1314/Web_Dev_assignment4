@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import './styles.css'; 
+import './styles.css';
 
 
 function Row({ NumCol }) {
@@ -11,20 +11,19 @@ function Row({ NumCol }) {
   return (
    <tr>{square}</tr>
   );
-}
 
 export default function App() {
   const [grid, setGrid] = useState([]);
 
   const addRow = () => {
     let NumCol;
-    if (grid[0]) { 
+    if (grid[0]) { //assume all column must have the same amount of row so no need to iterate
       NumCol = grid[0].props.NumCol;
     } else {
       NumCol = 1;
     }
     const newRow = <Row NumCol={NumCol} />;
-    const row = [...grid, newRow]
+    const row = [...grid,newRow]
     setGrid(row);
   };
 
@@ -33,7 +32,6 @@ export default function App() {
       setGrid(grid.slice(0, -1));
     }
   };
-
   const addColumn = () => {
     // If there is no first row, add one
     if (!grid[0]) {
