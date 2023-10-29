@@ -22,7 +22,7 @@ export default function App() {
       NumCol = 1;
     }
     const newRow = <Row NumCol={NumCol} />;
-    const row = [...grid, newRow]
+    const row = [...grid,newRow]
     setGrid(row);
   };
 
