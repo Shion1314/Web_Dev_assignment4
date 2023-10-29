@@ -2,9 +2,6 @@
 import React, { useState } from 'react';
 import './styles.css'; 
 
-import React, { useState } from 'react';
-import './styles.css'; 
-
 
 function Row({ NumCol }) {
   const square = [];
