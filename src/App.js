@@ -1,85 +1,74 @@
+import React, { useState } from "react";
 
-import React, { useState } from 'react';
-import './styles.css';
+import "./styles.css";
 
-
-function Row({ NumCol }) {
-  const square = [];
-  for (let index = 0; index < NumCol; index++) {
-    square.push(<td key={index} className='square'></td>)
-  }
-  return (
-   <tr>{square}</tr>
-  ); 
-}
+const range = (n) => [...Array(n).keys()]; // equivalent to range() in python
 
 export default function App() {
-  const [grid, setGrid] = useState([]);
+  const [rows, setRows] = useState(0);
+  const [cols, setCols] = useState(0);
 
   const addRow = () => {
-    let NumCol;
-    if (grid[0]) { //assume all column must have the same amount of row so no need to iterate
-      NumCol = grid[0].props.NumCol;
-    } else {
-      NumCol = 1;
-    }
-    const newRow = <Row NumCol={NumCol} />;
-    const row = [...grid,newRow]
-    setGrid(row);
+    setRows((currentValue) => {
+      if (currentValue <= 0) {
+        setCols(1);
+      }
+
+      return currentValue + 1;
+    });
   };
 
   const removeRow = () => {
-    if (grid.length > 0) {
-      setGrid(grid.slice(0, -1));
-    }
+    setRows((currentValue) => {
+      if (currentValue - 1 <= 0) {
+        setCols(0);
+      }
+
+      return Math.max(0, currentValue - 1);
+    });
   };
 
   const addColumn = () => {
-    // If there is no first row, add one
-    if (!grid[0]) {
-      addRow();
-    }
-    else{
-  
-     // Add a column to each row in the grid
-    const newGrid = grid.map((row) => {
-      const newNumCol = row.props.NumCol + 1;
-      return <Row NumCol={newNumCol} />;
-    });
-    setGrid(newGrid);
-  }
-  
-  
-  };
-  const removeColumn = () => {
-    if (grid.length === 0) {
-      return; 
-    }
-    if (grid[0].props.NumCol === 1) {
-      setGrid([]);
-    } else {
-      const newGrid = grid.map((row) => {
-        const newNumCol = Math.max(1, row.props.NumCol - 1);
-        return <Row NumCol={newNumCol} />;
-      });
-    
-      setGrid(newGrid);
-    }
+    setCols((currentValue) => {
+      if (rows <= 0) {
+        setRows(1);
+      }
 
-   
+      return currentValue + 1;
+    });
+  };
+
+  const removeColumn = () => {
+    setCols((currentValue) => {
+      if (currentValue - 1 <= 0) {
+        setRows(0);
+      }
+
+      return Math.max(0, currentValue - 1);
+    });
   };
 
   return (
     <div>
       <h1>Add Square to Blank Sheet</h1>
+
       <div className="button-group">
         <button onClick={addRow}>Add Row</button>
         <button onClick={removeRow}>Remove Row</button>
         <button onClick={addColumn}>Add Column</button>
         <button onClick={removeColumn}>Remove Column</button>
       </div>
+
       <table id="grid-sheet">
-        <tbody>{grid}</tbody>
+        <tbody>
+          {range(rows).map((key) => (
+            <tr key={key}>
+              {range(cols).map((key) => (
+                <td className="square" key={key} />
+              ))}
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
