@@ -10,7 +10,8 @@ function Row({ NumCol }) {
   }
   return (
    <tr>{square}</tr>
-  );
+  ); 
+}
 
 export default function App() {
   const [grid, setGrid] = useState([]);
@@ -32,6 +33,7 @@ export default function App() {
       setGrid(grid.slice(0, -1));
     }
   };
+
   const addColumn = () => {
     // If there is no first row, add one
     if (!grid[0]) {
@@ -39,7 +41,7 @@ export default function App() {
     }
     else{
   
-    // Add a column to each row in the grid
+     // Add a column to each row in the grid
     const newGrid = grid.map((row) => {
       const newNumCol = row.props.NumCol + 1;
       return <Row NumCol={newNumCol} />;
