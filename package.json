@@ -2,8 +2,10 @@
   "homepage": "https://Shion1314.github.io/Web_Dev_assignment4",
   "dependencies": {
     "react": "^18.0.0",
+    "react-colorful": "^5.6.1",
     "react-dom": "^18.0.0",
-    "react-scripts": "^5.0.0"
+    "react-scripts": "^5.0.0",
+    "react-tiny-popover": "^8.0.4"
   },
   "main": "/index.js",
   "devDependencies": {
