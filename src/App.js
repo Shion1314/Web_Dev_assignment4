@@ -72,6 +72,12 @@ export default function App() {
     })
   }
 
+    const clearColor = () => {
+      document.querySelectorAll("td").forEach((td) => {
+        td.style.backgroundColor = '';
+    })
+  }
+  
   return (
     <div>
       <h1>Add Square to Blank Sheet</h1>
@@ -84,6 +90,7 @@ export default function App() {
           <button onClick={removeColumn}>Remove Column</button>
           <button onClick={colorAllCell}>Color All Cells</button>
           <button onClick={colorUncolored}>Color All Uncolored Cells</button>
+          <button onClick={clearColor}>Clear Color</button>
         </div>
 
         <Popover
