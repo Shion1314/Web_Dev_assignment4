@@ -13,6 +13,8 @@ export default function App() {
   const [color, setColor] = useState("#fff");
   const [isPickerOpened, setIsPickerOpened] = useState(false);
 
+  const [fillMode, setFillMode] = useState(false);
+
   const addRow = () => {
     setRows((currentValue) => {
       if (currentValue <= 0) {
@@ -54,7 +56,11 @@ export default function App() {
   };
 
   const colorCell = (cell) => {
-    cell.style.backgroundColor = color;
+    if (fillMode) {
+      fillCells(cell);
+    } else {
+      cell.style.backgroundColor = color;
+   }
   };
 
   const colorAllCell = () => {
@@ -72,12 +78,47 @@ export default function App() {
     })
   }
 
-    const clearColor = () => {
-      document.querySelectorAll("td").forEach((td) => {
-        td.style.backgroundColor = '';
+  const clearColor = () => {
+    document.querySelectorAll("td").forEach((td) => {
+      td.style.backgroundColor = '';
     })
   }
+
+  const fillCells = (cell) => {
+    const targetColor = cell.style.backgroundColor;
+    const fillColor = color;
+    const toProcess = [cell];
+    const processed = new Set([cell]);
   
+    while (toProcess.length) {
+        const current = toProcess.pop();
+        current.style.backgroundColor = fillColor;
+  
+        const neighbors = getNeighbors(current);
+        for (const neighbor of neighbors) {
+            if (!processed.has(neighbor) && neighbor.style.backgroundColor === targetColor) {
+                toProcess.push(neighbor);
+                processed.add(neighbor);
+            }
+        }
+    }
+  };
+
+  const getNeighbors = (cell) => {
+    const table = document.getElementById('grid-sheet');
+    const rows = table.rows;
+    const position = cell.cellIndex;
+    const row = cell.parentElement.rowIndex;
+    const neighbors = [];
+
+    if (row > 0) neighbors.push(rows[row - 1].cells[position]);  
+    if (row < rows.length - 1) neighbors.push(rows[row + 1].cells[position]);
+    if (position > 0) neighbors.push(rows[row].cells[position - 1]); 
+    if (position < rows[row].cells.length - 1) neighbors.push(rows[row].cells[position + 1]);
+
+    return neighbors;
+  };
+
   return (
     <div>
       <h1>Add Square to Blank Sheet</h1>
@@ -91,6 +132,7 @@ export default function App() {
           <button onClick={colorAllCell}>Color All Cells</button>
           <button onClick={colorUncolored}>Color All Uncolored Cells</button>
           <button onClick={clearColor}>Clear Color</button>
+          <button onClick={() => setFillMode(!fillMode)}>Fill {fillMode ? "ON" : "OFF"}</button>
         </div>
 
         <Popover
@@ -119,6 +161,8 @@ export default function App() {
               {range(cols).map((key) => (
                 <td
                   key={key}
+                  data-row={key}
+                  data-col={key}
                   className="square"
                   onClick={({ currentTarget }) => colorCell(currentTarget)}
                 />
