@@ -132,7 +132,7 @@ export default function App() {
           <button onClick={colorAllCell}>Color All Cells</button>
           <button onClick={colorUncolored}>Color All Uncolored Cells</button>
           <button onClick={clearColor}>Clear Color</button>
-          <button onClick={() => setFillMode(!fillMode)}>Fill {fillMode ? "ON" : "OFF"}</button>
+          <button onClick={() => setFillMode(!fillMode)}>Fill Mode{fillMode ? "ON" : "OFF"}</button>
         </div>
 
         <Popover
